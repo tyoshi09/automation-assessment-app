@@ -35,7 +35,7 @@ const IndustryDashboard: React.FC = () => {
 
   useEffect(() => {
     loadIndustryData();
-  }, []);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadIndustryData = async () => {
     try {

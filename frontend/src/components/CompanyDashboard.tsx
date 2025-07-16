@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AssessmentResult } from '../types/assessment';
 import { assessmentService } from '../services/assessmentService';
 import StatisticsCharts from './StatisticsCharts';
