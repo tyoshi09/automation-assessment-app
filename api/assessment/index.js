@@ -1,7 +1,7 @@
 const { CosmosClient } = require('@azure/cosmos');
 
-const endpoint = 'https://business-automation-assess-db.documents.azure.com:443/';
-const key = 'zQLD6kOAQcU2EHDFxAsecAassd2hZVZCatz881uYVLXdtIZE21tLwAJXl59Ex5P5KTrdBWoHnjFUACDbm5Zgkw==';
+const endpoint = process.env.COSMOS_DB_ENDPOINT || 'https://business-automation-assess-db.documents.azure.com:443/';
+const key = process.env.COSMOS_DB_KEY || '';
 const databaseId = 'AssessmentDB';
 const containerId = 'AssessmentResults';
 
