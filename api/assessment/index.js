@@ -9,10 +9,29 @@ const cosmosClient = new CosmosClient({ endpoint, key });
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
+    context.log('Environment variables:', {
+        endpoint: process.env.COSMOS_DB_ENDPOINT,
+        keyExists: !!process.env.COSMOS_DB_KEY
+    });
 
     const method = req.method;
     
     try {
+        // テスト用のエンドポイント
+        if (req.query.test === 'true') {
+            context.res = {
+                status: 200,
+                body: { 
+                    message: 'API is working',
+                    environment: {
+                        endpoint: process.env.COSMOS_DB_ENDPOINT,
+                        keyExists: !!process.env.COSMOS_DB_KEY
+                    }
+                }
+            };
+            return;
+        }
+
         switch (method) {
             case 'POST':
                 await saveAssessment(context, req);
@@ -34,10 +53,14 @@ module.exports = async function (context, req) {
                 };
         }
     } catch (error) {
-        context.log.error('Error:', error);
+        context.log.error('Error details:', error);
         context.res = {
             status: 500,
-            body: { error: 'Internal server error' }
+            body: { 
+                error: 'Internal server error',
+                details: error.message,
+                stack: error.stack
+            }
         };
     }
 };
