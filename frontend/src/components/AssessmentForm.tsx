@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AssessmentForm as AssessmentFormType, AssessmentResult } from '../types/assessment';
 import { evaluationCriteria } from '../data/evaluationCriteria';
 import { calculateAssessmentResult } from '../utils/assessmentLogic';
+import { assessmentService } from '../services/assessmentService';
 import './AssessmentForm.css';
 
 interface Props {
@@ -30,10 +31,18 @@ const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
     qualityImprovement: 3
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = calculateAssessmentResult(form);
-    onSubmit(result);
+    
+    try {
+      const savedResult = await assessmentService.saveAssessment(result);
+      onSubmit(savedResult);
+    } catch (error) {
+      console.error('評価結果の保存に失敗しました:', error);
+      // エラーが発生してもローカルの結果を表示
+      onSubmit(result);
+    }
   };
 
   const handleInputChange = (field: keyof AssessmentFormType, value: string | number) => {
