@@ -1,0 +1,186 @@
+.result-view {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.result-view h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.business-info h3 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.business-info h4 {
+  color: #34495e;
+  margin-bottom: 10px;
+}
+
+.business-info p {
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.total-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.score-label {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+}
+
+.score-value {
+  font-size: 36px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.score-max {
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.result-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.result-card h4 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.tech-level,
+.feasibility,
+.priority {
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.recommended-tool {
+  background: #e8f4f8;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.recommended-tool h4 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.recommended-tool p {
+  color: #34495e;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.knockout-factors {
+  background: #ffeaa7;
+  border-left: 4px solid #e17055;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.knockout-factors h4 {
+  color: #d63031;
+  margin-bottom: 15px;
+}
+
+.knockout-factors ul {
+  list-style: none;
+  padding: 0;
+}
+
+.knockout-factors li {
+  color: #2d3436;
+  padding: 8px 0;
+  border-bottom: 1px solid #fab1a0;
+}
+
+.knockout-factors li:last-child {
+  border-bottom: none;
+}
+
+.result-actions {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.new-assessment-btn {
+  background: #3498db;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.new-assessment-btn:hover {
+  background: #2980b9;
+}
+
+.new-assessment-btn:active {
+  transform: translateY(1px);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .result-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .business-info {
+    order: 2;
+  }
+  
+  .total-score {
+    order: 1;
+  }
+  
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .result-view {
+    padding: 15px;
+  }
+}
