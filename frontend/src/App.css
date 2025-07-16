@@ -25,20 +25,22 @@
 
 .App-nav {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .App-nav button {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.1);
   color: white;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .App-nav button:hover {
@@ -80,6 +82,15 @@ body {
   
   .App-header p {
     font-size: 1rem;
+  }
+  
+  .App-nav {
+    gap: 6px;
+  }
+  
+  .App-nav button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
   }
   
   .App-main {
