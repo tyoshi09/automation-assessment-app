@@ -35,6 +35,7 @@ export interface AssessmentResult {
   recommendedTool: string;
   evaluationDate: string;
   evaluator: string;
+  createdAt?: string;
 }
 
 export interface EvaluationCriteria {
