@@ -10,11 +10,20 @@ interface Props {
 }
 
 const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
+  // 本日の日付を取得
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const [form, setForm] = useState<AssessmentFormType>({
     companyName: '',
     department: '',
     businessName: '',
-    evaluationDate: new Date().toISOString().split('T')[0],
+    evaluationDate: getTodayDate(),
     evaluator: '',
     regularity: 3,
     procedureClarity: 3,
