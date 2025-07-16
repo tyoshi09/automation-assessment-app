@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import AssessmentForm from './components/AssessmentForm';
 import ResultView from './components/ResultView';
 import CompanyDashboard from './components/CompanyDashboard';
+import IndustryDashboard from './components/IndustryDashboard';
 import { AssessmentResult } from './types/assessment';
 import './App.css';
 
-type ViewMode = 'assessment' | 'result' | 'dashboard';
+type ViewMode = 'assessment' | 'result' | 'dashboard' | 'industry';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewMode>('assessment');
@@ -44,6 +45,12 @@ function App() {
           >
             企業分析
           </button>
+          <button 
+            className={currentView === 'industry' ? 'active' : ''}
+            onClick={() => handleViewChange('industry')}
+          >
+            業界分析
+          </button>
         </nav>
       </header>
       
@@ -61,6 +68,10 @@ function App() {
         
         {currentView === 'dashboard' && (
           <CompanyDashboard />
+        )}
+        
+        {currentView === 'industry' && (
+          <IndustryDashboard />
         )}
       </main>
     </div>
