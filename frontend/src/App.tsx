@@ -3,10 +3,11 @@ import AssessmentForm from './components/AssessmentForm';
 import ResultView from './components/ResultView';
 import CompanyDashboard from './components/CompanyDashboard';
 import IndustryDashboard from './components/IndustryDashboard';
+import AdminDashboard from './components/AdminDashboard';
 import { AssessmentResult } from './types/assessment';
 import './App.css';
 
-type ViewMode = 'assessment' | 'result' | 'dashboard' | 'industry';
+type ViewMode = 'assessment' | 'result' | 'dashboard' | 'industry' | 'admin';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewMode>('assessment');
@@ -51,6 +52,12 @@ function App() {
           >
             業界分析
           </button>
+          <button 
+            className={currentView === 'admin' ? 'active' : ''}
+            onClick={() => handleViewChange('admin')}
+          >
+            管理画面
+          </button>
         </nav>
       </header>
       
@@ -72,6 +79,10 @@ function App() {
         
         {currentView === 'industry' && (
           <IndustryDashboard />
+        )}
+        
+        {currentView === 'admin' && (
+          <AdminDashboard />
         )}
       </main>
     </div>

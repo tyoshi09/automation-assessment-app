@@ -217,31 +217,51 @@ interface AssessmentResult {
 ## 制限事項
 
 ### 現在の制限
-- **データ永続化**：ページリロードでデータが消失
-- **複数業務管理**：1つずつの評価のみ対応
-- **統計機能**：グラフ・分析機能なし
-- **ユーザー管理**：認証機能なし
+- **ユーザー管理**：認証機能なし（全データが公開状態）
+- **データ削除**：管理者による手動削除が必要
+- **アクセス制御**：企業別データアクセス制限なし
+- **セキュリティ**：基本的なHTTPS通信のみ
 
 ### パフォーマンス制限
 - **Azure Static Web Apps**：無料枠での運用
 - **GitHub Actions**：月間実行時間制限（パブリックリポジトリは無制限）
 
+## 実装済み機能
+
+### Phase 1: データ永続化機能 ✅
+- **Cosmos DB連携**: Azure Cosmos DBによる評価結果の永続化
+- **Azure Functions API**: サーバーレス関数による CRUD操作
+- **環境変数管理**: 機密情報の安全な管理
+
+### Phase 2: 企業分析機能 ✅
+- **企業検索**: 企業名による評価結果の検索・表示
+- **企業統計**: 企業別の総合統計情報
+- **最新評価一覧**: 企業の最新評価結果の表示
+
+### Phase 3: 統計・グラフ機能 ✅
+- **円グラフ**: 技術レベル分布の可視化（Chart.js）
+- **棒グラフ**: 導入可能性分布の可視化（Chart.js）
+- **インタラクティブUI**: レスポンシブなグラフ表示
+- **モバイル対応**: スマートフォン・タブレット対応
+
+### Phase 4: 業界横断分析機能 ✅
+- **業界統計**: 全参加企業の概況表示
+- **企業ランキング**: 平均スコア順での企業順位表示
+- **類似業務マッチング**: 同じ業務を行う企業の発見
+- **類似度スコア**: 独自アルゴリズムによる業務類似度算出
+- **検索・フィルタ**: 業務名・企業名での絞り込み機能
+
 ## 今後の拡張予定
 
-### Phase 2: データ管理機能
-- **Cosmos DB連携**：評価結果の永続化
-- **結果一覧**：複数業務の管理画面
-- **検索・フィルタ**：業務検索機能
+### Phase 5: セキュリティ強化
+- **Azure AD B2C**: ユーザー認証システム
+- **ロールベースアクセス制御**: 企業別データアクセス管理
+- **API認証**: Azure Functions の認証レベル強化
 
-### Phase 3: 分析・統計機能
-- **ダッシュボード**：グラフ・チャート表示
-- **企業横断分析**：複数企業のデータ比較
-- **トレンド分析**：時系列での変化追跡
-
-### Phase 4: 高度機能
-- **ユーザー認証**：Azure AD B2C連携
-- **レポート出力**：PDF・Excel形式
-- **API提供**：外部システム連携
+### Phase 6: 高度機能
+- **レポート出力**: PDF・Excel形式でのレポート生成
+- **時系列分析**: 評価結果の時系列変化追跡
+- **API提供**: 外部システム連携用のREST API
 
 ## 付録
 
@@ -259,5 +279,129 @@ interface AssessmentResult {
 ---
 
 **最終更新日**: 2025年7月16日  
-**バージョン**: 1.0.0  
+**バージョン**: 2.0.0  
 **作成者**: 業務自動化評価システム開発チーム
+
+## データ削除方法
+
+### テストデータの削除
+テスト用に作成したデータを削除するには、以下の方法があります：
+
+#### 1. Azure Portalでの削除
+1. Azure Portalにログイン
+2. Cosmos DB「business-automation-assess-db」を選択
+3. 「データエクスプローラー」を開く
+4. 「AssessmentResults」コンテナを選択
+5. 削除したいアイテムを選択して削除
+
+#### 2. コマンドラインでの削除
+```bash
+# 特定企業のデータを削除
+az cosmosdb sql container delete-item \
+  --account-name business-automation-assess-db \
+  --resource-group automation-assessment-rg \
+  --database-name AssessmentDB \
+  --container-name AssessmentResults \
+  --item-id <アイテムID> \
+  --partition-key-value <企業名>
+
+# 全データを削除（注意：復元不可）
+az cosmosdb sql container delete \
+  --account-name business-automation-assess-db \
+  --resource-group automation-assessment-rg \
+  --database-name AssessmentDB \
+  --name AssessmentResults
+
+# コンテナの再作成
+az cosmosdb sql container create \
+  --account-name business-automation-assess-db \
+  --resource-group automation-assessment-rg \
+  --database-name AssessmentDB \
+  --name AssessmentResults \
+  --partition-key-path "/companyName"
+```
+
+## セキュリティ強化施策
+
+### 低コスト・簡単な施策
+
+#### 1. Azure Static Web Apps の認証機能（無料）
+```yaml
+# staticwebapp.config.json
+{
+  "auth": {
+    "identityProviders": {
+      "azureActiveDirectory": {
+        "userDetailsClaim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+      }
+    }
+  },
+  "routes": [
+    {
+      "route": "/api/*",
+      "allowedRoles": ["authenticated"]
+    }
+  ]
+}
+```
+
+#### 2. Azure Functions の認証レベル変更
+```javascript
+// function.json
+{
+  "bindings": [
+    {
+      "authLevel": "function", // anonymous → function に変更
+      "type": "httpTrigger"
+    }
+  ]
+}
+```
+
+#### 3. CORS設定の強化
+```json
+{
+  "cors": {
+    "allowedOrigins": ["https://polite-bay-08aef5400.2.azurestaticapps.net"],
+    "allowedMethods": ["GET", "POST", "DELETE"],
+    "allowedHeaders": ["Content-Type", "Authorization"]
+  }
+}
+```
+
+#### 4. Cosmos DB のファイアウォール設定
+```bash
+# 特定IPアドレスからのみアクセス許可
+az cosmosdb network-rule add \
+  --account-name business-automation-assess-db \
+  --resource-group automation-assessment-rg \
+  --ip-address <許可するIPアドレス>
+```
+
+#### 5. 入力検証の強化
+```typescript
+// バリデーション関数の追加
+const validateInput = (data: any): boolean => {
+  // SQLインジェクション対策
+  const sqlPattern = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER)\b)/i;
+  
+  // XSS対策
+  const xssPattern = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+  
+  for (const value of Object.values(data)) {
+    if (typeof value === 'string') {
+      if (sqlPattern.test(value) || xssPattern.test(value)) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+```
+
+### 実装優先度
+1. **高**: Azure Static Web Apps認証（無料、簡単）
+2. **中**: Azure Functions認証レベル変更（無料、簡単）
+3. **中**: 入力検証強化（無料、開発工数少）
+4. **低**: CORS設定（無料、設定変更のみ）
+5. **低**: Cosmos DB ファイアウォール（無料、運用考慮必要）
