@@ -1,11 +1,11 @@
 import { AssessmentForm, AssessmentResult } from '../types/assessment';
 
 export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResult => {
-  // 総得点計算（12項目×5点=60点満点）
+  // 総得点計算（11項目×5点=55点満点）
   const totalScore = 
     form.monthlyWorkTime + form.taskPersonality + form.errorFrequency + form.urgencyLevel +
     form.dataStructure + form.procedureDocumentation + form.exceptionHandling + form.taskComplexity +
-    form.taskFrequency + form.departmentExpansion + form.businessContinuity + form.maintenanceEase;
+    form.taskFrequency + form.businessContinuity + form.maintenanceEase;
 
   // 実務的なノックアウトファクター判定
   const knockoutFactors: string[] = [];
@@ -43,7 +43,7 @@ export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResul
 
   // ビジネス価値重視の導入可能性判定
   let feasibility: AssessmentResult['feasibility'];
-  const businessValue = form.monthlyWorkTime + form.taskFrequency + form.departmentExpansion;
+  const businessValue = form.monthlyWorkTime + form.taskFrequency + form.businessContinuity;
   const implementationEase = form.dataStructure + form.procedureDocumentation + form.exceptionHandling;
   const adjustedScore = businessValue + implementationEase;
   
@@ -59,7 +59,7 @@ export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResul
   let priority: AssessmentResult['priority'];
   if (feasibility === '高' && form.businessContinuity >= 4) {
     priority = '高';
-  } else if (feasibility === '中' && (form.monthlyWorkTime >= 3 || form.departmentExpansion >= 3)) {
+  } else if (feasibility === '中' && (form.monthlyWorkTime >= 3 || form.taskFrequency >= 3)) {
     priority = '中';
   } else {
     priority = '低';

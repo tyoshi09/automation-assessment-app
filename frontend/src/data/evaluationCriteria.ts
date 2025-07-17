@@ -4,8 +4,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   // === ビジネスインパクト軸 ===
   {
     field: 'monthlyWorkTime',
-    label: '月間作業時間',
+    label: 'B1. 月間作業時間',
     description: 'この業務に月間何時間を要しているか',
+    detailDescription: '自動化による時間削減効果を測定するため。月間作業時間が多いほど、自動化による投資対効果が高くなります。',
     category: 'business',
     options: [
       { value: 1, label: '5時間未満' },
@@ -17,8 +18,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   },
   {
     field: 'taskPersonality',
-    label: '作業の属人性',
+    label: 'B2. 作業の属人性',
     description: 'この業務を実行できる人材の範囲',
+    detailDescription: '作業の標準化度合いを測定するため。属人性が低い（誰でもできる）ほど、自動化しやすく効果も高くなります。',
     category: 'business',
     options: [
       { value: 1, label: '特定の専門家のみ可能' },
@@ -30,8 +32,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   },
   {
     field: 'errorFrequency',
-    label: '現在のミス率',
+    label: 'B3. 現在のミス率',
     description: 'この業務でミスややり直しの発生頻度',
+    detailDescription: 'ミスの発生頻度が高いほど、自動化による品質向上効果が期待できます。人的ミスの削減は大きなメリットです。',
     category: 'business',
     options: [
       { value: 1, label: '月1回以上発生' },
@@ -43,8 +46,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   },
   {
     field: 'urgencyLevel',
-    label: '業務の緊急度',
+    label: 'B4. 業務の緊急度',
     description: 'この業務の完了期限の厳しさ',
+    detailDescription: '緊急度が高すぎる業務は自動化が困難です。適度な時間的余裕があることで、安定した自動化が可能になります。',
     category: 'business',
     options: [
       { value: 1, label: '翌日以降でも問題なし' },
@@ -58,8 +62,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   // === 技術実現性軸 ===
   {
     field: 'dataStructure',
-    label: 'データの整理度',
+    label: 'T1. データの整理度',
     description: '扱うデータの整理・構造化状況',
+    detailDescription: 'データが構造化されているほど、ワークフロー型の自動化が適用しやすくなります。非構造化データはAI型の処理が必要です。',
     category: 'technical',
     options: [
       { value: 1, label: '手書き文書・PDF・画像' },
@@ -71,8 +76,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   },
   {
     field: 'procedureDocumentation',
-    label: '作業手順書の完備度',
+    label: 'T2. 作業手順書の完備度',
     description: '作業手順の文書化レベル',
+    detailDescription: '手順書が整備されているほど、自動化の設計・実装が容易になります。文書化レベルが低いと導入に時間がかかります。',
     category: 'technical',
     options: [
       { value: 1, label: '口頭説明のみ' },
@@ -84,8 +90,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   },
   {
     field: 'exceptionHandling',
-    label: '例外対応の頻度',
+    label: 'T3. 例外対応の頻度',
     description: 'イレギュラーな対応が必要な頻度',
+    detailDescription: '例外処理が頻繁に発生する業務は、ワークフロー型では対応困難です。AIエージェント型が適している場合があります。',
     category: 'technical',
     options: [
       { value: 1, label: '毎回異なる対応' },
@@ -97,8 +104,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   },
   {
     field: 'taskComplexity',
-    label: '作業の複雑度',
+    label: 'T4. 作業の複雑度',
     description: '業務実行に必要な専門知識・スキルレベル',
+    detailDescription: '単純作業はワークフロー型、高度な専門知識が必要な作業はAIエージェント型が適しています。',
     category: 'technical',
     options: [
       { value: 1, label: '高度な専門知識が必要' },
@@ -112,8 +120,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   // === 持続可能性軸 ===
   {
     field: 'taskFrequency',
-    label: '作業実施頻度',
+    label: 'S1. 作業実施頻度',
     description: 'この業務の実施頻度',
+    detailDescription: '作業頻度が高いほど、自動化の投資対効果が高くなります。単発作業は自動化のメリットが低いです。',
     category: 'sustainability',
     options: [
       { value: 1, label: '年数回の単発' },
@@ -124,22 +133,10 @@ export const evaluationCriteria: EvaluationCriteria[] = [
     ]
   },
   {
-    field: 'departmentExpansion',
-    label: '他部署展開の可能性',
-    description: '同様の業務の他部署への展開可能性',
-    category: 'sustainability',
-    options: [
-      { value: 1, label: '当部署のみ' },
-      { value: 2, label: '展開は困難' },
-      { value: 3, label: '調整すれば可能' },
-      { value: 4, label: '容易に展開可能' },
-      { value: 5, label: '全社共通業務' }
-    ]
-  },
-  {
     field: 'businessContinuity',
-    label: '業務の将来性',
+    label: 'S2. 業務の将来性',
     description: 'この業務の将来的な見通し',
+    detailDescription: '将来的に継続・拡大する業務ほど、自動化の投資価値が高くなります。廃止予定の業務は優先度が低いです。',
     category: 'sustainability',
     options: [
       { value: 1, label: '廃止・縮小予定' },
@@ -151,8 +148,9 @@ export const evaluationCriteria: EvaluationCriteria[] = [
   },
   {
     field: 'maintenanceEase',
-    label: '保守・メンテナンス性',
+    label: 'S3. 保守・メンテナンス性',
     description: '自動化後の保守・運用の容易さ',
+    detailDescription: '保守が容易な自動化システムほど、長期的な運用コストが低くなります。専門知識が必要なシステムはリスクが高いです。',
     category: 'sustainability',
     options: [
       { value: 1, label: '専門知識が必要' },

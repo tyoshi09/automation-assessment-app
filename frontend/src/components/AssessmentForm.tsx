@@ -19,6 +19,10 @@ const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
     return `${year}-${month}-${day}`;
   };
 
+  // ポップアップの状態管理
+  const [showDetailPopup, setShowDetailPopup] = useState(false);
+  const [selectedCriteria, setSelectedCriteria] = useState<typeof evaluationCriteria[0] | null>(null);
+
   const [form, setForm] = useState<AssessmentFormType>({
     companyName: '',
     department: '',
@@ -37,7 +41,6 @@ const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
     taskComplexity: 3,
     // 持続可能性軸
     taskFrequency: 3,
-    departmentExpansion: 3,
     businessContinuity: 3,
     maintenanceEase: 3
   });
@@ -58,6 +61,16 @@ const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
 
   const handleInputChange = (field: keyof AssessmentFormType, value: string | number) => {
     setForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleShowDetail = (criteria: typeof evaluationCriteria[0]) => {
+    setSelectedCriteria(criteria);
+    setShowDetailPopup(true);
+  };
+
+  const handleCloseDetail = () => {
+    setShowDetailPopup(false);
+    setSelectedCriteria(null);
   };
 
   return (
@@ -120,30 +133,111 @@ const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
         {/* 評価項目 */}
         <div className="form-section">
           <h3>評価項目</h3>
-          {evaluationCriteria.map((criteria) => (
-            <div key={criteria.field} className="evaluation-item">
-              <div className="evaluation-header">
-                <h4>{criteria.label}</h4>
-                <p>{criteria.description}</p>
+          
+          {/* ビジネスインパクト軸 */}
+          <div className="category-section">
+            <h4 className="category-title">💰 ビジネスインパクト軸</h4>
+            {evaluationCriteria.filter(c => c.category === 'business').map((criteria) => (
+              <div key={criteria.field} className="evaluation-item">
+                <div className="evaluation-header">
+                  <h4 
+                    className="clickable-label" 
+                    onClick={() => handleShowDetail(criteria)}
+                    title="クリックで詳細説明を表示"
+                  >
+                    {criteria.label} <span className="info-icon">ℹ️</span>
+                  </h4>
+                  <p>{criteria.description}</p>
+                </div>
+                <div className="evaluation-options">
+                  {criteria.options.map((option) => (
+                    <label key={option.value} className="radio-option">
+                      <input
+                        type="radio"
+                        name={criteria.field}
+                        value={option.value}
+                        checked={form[criteria.field] === option.value}
+                        onChange={(e) => handleInputChange(criteria.field, Number(e.target.value))}
+                      />
+                      <span className="radio-label">
+                        <strong>{option.value}点:</strong> {option.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
-              <div className="evaluation-options">
-                {criteria.options.map((option) => (
-                  <label key={option.value} className="radio-option">
-                    <input
-                      type="radio"
-                      name={criteria.field}
-                      value={option.value}
-                      checked={form[criteria.field] === option.value}
-                      onChange={(e) => handleInputChange(criteria.field, Number(e.target.value))}
-                    />
-                    <span className="radio-label">
-                      <strong>{option.value}点:</strong> {option.label}
-                    </span>
-                  </label>
-                ))}
+            ))}
+          </div>
+
+          {/* 技術実現性軸 */}
+          <div className="category-section">
+            <h4 className="category-title">🔧 技術実現性軸</h4>
+            {evaluationCriteria.filter(c => c.category === 'technical').map((criteria) => (
+              <div key={criteria.field} className="evaluation-item">
+                <div className="evaluation-header">
+                  <h4 
+                    className="clickable-label" 
+                    onClick={() => handleShowDetail(criteria)}
+                    title="クリックで詳細説明を表示"
+                  >
+                    {criteria.label} <span className="info-icon">ℹ️</span>
+                  </h4>
+                  <p>{criteria.description}</p>
+                </div>
+                <div className="evaluation-options">
+                  {criteria.options.map((option) => (
+                    <label key={option.value} className="radio-option">
+                      <input
+                        type="radio"
+                        name={criteria.field}
+                        value={option.value}
+                        checked={form[criteria.field] === option.value}
+                        onChange={(e) => handleInputChange(criteria.field, Number(e.target.value))}
+                      />
+                      <span className="radio-label">
+                        <strong>{option.value}点:</strong> {option.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* 持続可能性軸 */}
+          <div className="category-section">
+            <h4 className="category-title">🔄 持続可能性軸</h4>
+            {evaluationCriteria.filter(c => c.category === 'sustainability').map((criteria) => (
+              <div key={criteria.field} className="evaluation-item">
+                <div className="evaluation-header">
+                  <h4 
+                    className="clickable-label" 
+                    onClick={() => handleShowDetail(criteria)}
+                    title="クリックで詳細説明を表示"
+                  >
+                    {criteria.label} <span className="info-icon">ℹ️</span>
+                  </h4>
+                  <p>{criteria.description}</p>
+                </div>
+                <div className="evaluation-options">
+                  {criteria.options.map((option) => (
+                    <label key={option.value} className="radio-option">
+                      <input
+                        type="radio"
+                        name={criteria.field}
+                        value={option.value}
+                        checked={form[criteria.field] === option.value}
+                        onChange={(e) => handleInputChange(criteria.field, Number(e.target.value))}
+                      />
+                      <span className="radio-label">
+                        <strong>{option.value}点:</strong> {option.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="form-actions">
@@ -152,6 +246,39 @@ const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
           </button>
         </div>
       </form>
+
+      {/* 詳細説明ポップアップ */}
+      {showDetailPopup && selectedCriteria && (
+        <div className="modal-overlay" onClick={handleCloseDetail}>
+          <div className="modal detail-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>{selectedCriteria.label}</h3>
+              <button className="close-btn" onClick={handleCloseDetail}>×</button>
+            </div>
+            <div className="modal-content">
+              <div className="detail-section">
+                <h4>📝 概要</h4>
+                <p>{selectedCriteria.description}</p>
+              </div>
+              <div className="detail-section">
+                <h4>🎯 評価の目的</h4>
+                <p>{selectedCriteria.detailDescription}</p>
+              </div>
+              <div className="detail-section">
+                <h4>📊 評価基準</h4>
+                <div className="criteria-options">
+                  {selectedCriteria.options.map((option) => (
+                    <div key={option.value} className="criteria-option">
+                      <span className="option-score">{option.value}点</span>
+                      <span className="option-label">{option.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

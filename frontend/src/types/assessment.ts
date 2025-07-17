@@ -20,7 +20,6 @@ export interface AssessmentForm {
 
   // 持続可能性軸（1-5点）
   taskFrequency: number;         // 作業実施頻度
-  departmentExpansion: number;   // 他部署展開の可能性
   businessContinuity: number;    // 業務の将来性
   maintenanceEase: number;       // 保守・メンテナンス性
 }
@@ -45,6 +44,7 @@ export interface EvaluationCriteria {
   field: keyof AssessmentForm;
   label: string;
   description: string;
+  detailDescription: string;
   category: 'business' | 'technical' | 'sustainability';
   options: {
     value: number;
