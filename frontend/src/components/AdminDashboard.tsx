@@ -336,13 +336,14 @@ const AdminDashboard: React.FC = () => {
                     <span className="tech-level-badge" style={{ backgroundColor: '#28a745' }}>Lv1:RPA</span>
                   </div>
                   <div className="criteria-content">
-                    <p><strong>条件：</strong></p>
+                    <p><strong>適用条件：</strong></p>
                     <ul>
-                      <li>定型・反復性 ≥ 4点</li>
-                      <li>ルール明確性 ≥ 4点</li>
-                      <li>例外処理 ≥ 4点</li>
+                      <li>高頻度（毎日・週5回以上）の作業</li>
+                      <li>手順が完全に標準化済み</li>
+                      <li>単純作業中心（判断不要）</li>
+                      <li>システム連携がシンプル</li>
                     </ul>
-                    <p><strong>推奨ツール：</strong><br/>UiPath・Power Automate・WinActor</p>
+                    <p><strong>推奨ツール：</strong><br/>Power Automate・UiPath・BizRobo!</p>
                   </div>
                 </div>
 
@@ -351,12 +352,14 @@ const AdminDashboard: React.FC = () => {
                     <span className="tech-level-badge" style={{ backgroundColor: '#fd7e14' }}>Lv2:AI+ワークフロー</span>
                   </div>
                   <div className="criteria-content">
-                    <p><strong>条件：</strong></p>
+                    <p><strong>適用条件：</strong></p>
                     <ul>
-                      <li>作業手順の決定 = 3点</li>
-                      <li>学習・適応 = 3点</li>
+                      <li>中程度の複雑性</li>
+                      <li>一部で人間の判断が必要</li>
+                      <li>複数システム間連携</li>
+                      <li>月5-20時間の作業</li>
                     </ul>
-                    <p><strong>推奨ツール：</strong><br/>Dify・Zapier・Microsoft Copilot Studio</p>
+                    <p><strong>推奨ツール：</strong><br/>Power Platform・Zapier・Make</p>
                   </div>
                 </div>
 
@@ -365,12 +368,14 @@ const AdminDashboard: React.FC = () => {
                     <span className="tech-level-badge" style={{ backgroundColor: '#6f42c1' }}>Lv3:エージェントAI</span>
                   </div>
                   <div className="criteria-content">
-                    <p><strong>条件：</strong></p>
+                    <p><strong>適用条件：</strong></p>
                     <ul>
-                      <li>作業手順の決定 ≤ 2点</li>
-                      <li>学習・適応 ≤ 2点</li>
+                      <li>大部分が判断業務</li>
+                      <li>文章理解・要約が必要</li>
+                      <li>PDF・画像・非構造化データ</li>
+                      <li>月20時間以上の作業</li>
                     </ul>
-                    <p><strong>推奨ツール：</strong><br/>Claude・ChatGPT・カスタムAIエージェント</p>
+                    <p><strong>推奨ツール：</strong><br/>Claude・ChatGPT・Microsoft Copilot</p>
                   </div>
                 </div>
 
@@ -381,39 +386,41 @@ const AdminDashboard: React.FC = () => {
                   <div className="criteria-content">
                     <p><strong>条件：</strong></p>
                     <ul>
-                      <li>ノックアウトファクター存在</li>
-                      <li>または上記条件に該当なし</li>
+                      <li>機密データ・リアルタイム対応</li>
+                      <li>月5時間未満の作業</li>
+                      <li>厳格なセキュリティ承認が必要</li>
+                      <li>ROIが見込めない</li>
                     </ul>
-                    <p><strong>推奨：</strong><br/>手動作業継続</p>
+                    <p><strong>推奨：</strong><br/>業務標準化後に再評価</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="criteria-section">
-              <h4>⚠️ ノックアウトファクター</h4>
+              <h4>⚠️ 自動化導入の阻害要因</h4>
               <div className="knockout-list">
-                <div className="knockout-item">データ・情報の機密性 = 1点</div>
-                <div className="knockout-item">リアルタイム性要求 = 1点</div>
-                <div className="knockout-item">セキュリティ制約 = 1点</div>
-                <div className="knockout-item">時間短縮効果 = 1点</div>
+                <div className="knockout-item">機密データのため自動化困難</div>
+                <div className="knockout-item">リアルタイム対応が必要</div>
+                <div className="knockout-item">セキュリティ承認が困難</div>
+                <div className="knockout-item">投資対効果が低い（月5時間未満）</div>
               </div>
             </div>
 
             <div className="criteria-section">
-              <h4>📈 導入可能性判定</h4>
+              <h4>📈 導入可能性判定（ROI重視）</h4>
               <div className="feasibility-grid">
                 <div className="feasibility-item">
                   <span className="feasibility-badge" style={{ backgroundColor: '#28a745' }}>高</span>
-                  <span>50-65点（積極的導入推奨）</span>
+                  <span>月20時間以上 + 高品質化効果 + 標準化済み</span>
                 </div>
                 <div className="feasibility-item">
                   <span className="feasibility-badge" style={{ backgroundColor: '#ffc107' }}>中</span>
-                  <span>35-49点（条件整備後に導入検討）</span>
+                  <span>月5-20時間 + 一定の効果が見込める</span>
                 </div>
                 <div className="feasibility-item">
                   <span className="feasibility-badge" style={{ backgroundColor: '#dc3545' }}>低</span>
-                  <span>34点以下（現状では導入困難）</span>
+                  <span>月5時間未満 または 複雑すぎて効果が見込めない</span>
                 </div>
               </div>
             </div>

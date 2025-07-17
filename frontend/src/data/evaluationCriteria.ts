@@ -3,132 +3,132 @@ import { EvaluationCriteria } from '../types/assessment';
 export const evaluationCriteria: EvaluationCriteria[] = [
   {
     field: 'regularity',
-    label: '定型・反復性',
-    description: '業務の定型性・反復性の程度',
+    label: '業務の作業頻度',
+    description: 'この業務は月に何回実施されますか？',
     options: [
-      { value: 1, label: '不定期作業' },
-      { value: 3, label: '週次・月次の定期作業' },
-      { value: 5, label: '毎日同じ作業' }
+      { value: 1, label: '月1回以下・単発作業' },
+      { value: 3, label: '月2-10回・週数回' },
+      { value: 5, label: '毎日・週5回以上' }
     ]
   },
   {
     field: 'procedureClarity',
-    label: 'ルール・手順の明確性',
-    description: '作業手順の明確化・文書化の程度',
+    label: '作業手順の標準化',
+    description: '作業手順は誰でもできるレベルまで標準化されていますか？',
     options: [
-      { value: 1, label: '属人的判断' },
-      { value: 3, label: '基本手順あり' },
-      { value: 5, label: '完全にマニュアル化' }
+      { value: 1, label: '特定の人しかできない' },
+      { value: 3, label: '経験者なら理解できる' },
+      { value: 5, label: '新人でもマニュアル通りにできる' }
     ]
   },
   {
     field: 'exceptionFrequency',
-    label: '例外処理の頻度',
-    description: '例外的な処理が発生する頻度',
+    label: '判断業務の割合',
+    description: '作業中に人間の判断が必要な場面はどの程度ありますか？',
     options: [
-      { value: 1, label: '頻繁に例外' },
-      { value: 3, label: '月1-2回例外' },
-      { value: 5, label: '例外なし' }
+      { value: 1, label: '大部分が判断業務' },
+      { value: 3, label: '一部で判断が必要' },
+      { value: 5, label: 'ほぼ単純作業のみ' }
     ]
   },
   {
     field: 'procedureDecision',
-    label: '作業手順の決定',
-    description: '作業手順の決定方法',
+    label: 'データ入力の複雑さ',
+    description: 'データの入力・転記・チェック作業の複雑さは？',
     options: [
-      { value: 1, label: '専門知識による判断' },
-      { value: 3, label: '基本手順＋状況判断' },
-      { value: 5, label: '完全にマニュアル通り' }
+      { value: 1, label: '文章理解・要約が必要' },
+      { value: 3, label: '簡単な計算・変換が必要' },
+      { value: 5, label: '単純なコピー&ペースト' }
     ]
   },
   {
     field: 'learningAdaptation',
-    label: '学習・適応の必要性',
-    description: '継続的な学習・適応が必要な程度',
+    label: '業務ルールの変更頻度',
+    description: '業務のルールや手順はどの程度変更されますか？',
     options: [
-      { value: 1, label: '常に学習が必要' },
-      { value: 3, label: '時々パターン変更' },
-      { value: 5, label: '固定パターン' }
+      { value: 1, label: '月1回以上変更される' },
+      { value: 3, label: '年数回変更される' },
+      { value: 5, label: 'ほとんど変更されない' }
     ]
   },
   {
     field: 'dataConfidentiality',
-    label: 'データ・情報の機密性',
-    description: '扱うデータ・情報の機密性レベル',
+    label: '扱うデータの機密レベル',
+    description: '自動化ツールに任せられるデータですか？',
     options: [
       { value: 1, label: '個人情報・機密情報' },
-      { value: 3, label: '社内限定' },
-      { value: 5, label: '一般情報' }
+      { value: 3, label: '社内データ（管理が必要）' },
+      { value: 5, label: '公開情報・一般データ' }
     ]
   },
   {
     field: 'realtimeRequirement',
-    label: 'リアルタイム性要求',
-    description: '即座の対応が必要な程度',
+    label: '緊急対応の必要性',
+    description: 'この業務はいつまでに完了する必要がありますか？',
     options: [
-      { value: 1, label: '即座の対応必要' },
-      { value: 3, label: '数時間以内' },
-      { value: 5, label: '時間的余裕あり' }
+      { value: 1, label: '即座・リアルタイム' },
+      { value: 3, label: '当日中・数時間以内' },
+      { value: 5, label: '翌日以降でも問題なし' }
     ]
   },
   {
     field: 'systemOperation',
-    label: 'システム操作',
-    description: '操作するシステムの数と複雑さ',
+    label: '使用システム数',
+    description: 'この業務で使用するシステム・アプリの数は？',
     options: [
-      { value: 1, label: '複数システム' },
-      { value: 3, label: '2-3システム' },
-      { value: 5, label: '単一システム' }
+      { value: 1, label: '5個以上の複数システム' },
+      { value: 3, label: '2-4個のシステム' },
+      { value: 5, label: '1個のシステムのみ' }
     ]
   },
   {
     field: 'dataProcessing',
-    label: 'データ処理',
-    description: '処理するデータの構造化レベル',
+    label: 'ファイル・文書の扱い',
+    description: 'どのような形式のデータを扱いますか？',
     options: [
-      { value: 1, label: '非構造化テキスト' },
-      { value: 3, label: '半構造化' },
-      { value: 5, label: '構造化データ' }
+      { value: 1, label: 'PDF・画像・手書き文書' },
+      { value: 3, label: 'Word・PowerPoint等' },
+      { value: 5, label: 'Excel・CSV・システム画面' }
     ]
   },
   {
     field: 'apiIntegration',
-    label: 'API連携',
-    description: 'システム間連携の方法',
+    label: 'システム連携の難易度',
+    description: 'システム間でのデータのやり取りは？',
     options: [
-      { value: 1, label: '画面操作のみ' },
-      { value: 3, label: '一部API' },
-      { value: 5, label: 'API完備' }
+      { value: 1, label: '手作業でのコピー&ペースト' },
+      { value: 3, label: 'ファイル出力・取り込み' },
+      { value: 5, label: 'システム間の自動連携あり' }
     ]
   },
   {
     field: 'securityConstraints',
-    label: 'セキュリティ制約',
-    description: 'セキュリティ要件の厳格さ',
+    label: 'セキュリティ・承認要件',
+    description: '自動化導入時のセキュリティ制約は？',
     options: [
-      { value: 1, label: '厳格な制約' },
-      { value: 3, label: '中程度制約' },
-      { value: 5, label: '制約なし' }
+      { value: 1, label: '厳格な承認・監査が必要' },
+      { value: 3, label: '上司の承認があれば可能' },
+      { value: 5, label: '特に制約なし' }
     ]
   },
   {
     field: 'timeSavingEffect',
-    label: '時間短縮効果',
-    description: '期待される時間短縮効果',
+    label: '月間作業時間',
+    description: 'この業務に月間何時間かけていますか？',
     options: [
-      { value: 1, label: '微改善' },
-      { value: 3, label: '30-50%短縮' },
-      { value: 5, label: '80%以上短縮' }
+      { value: 1, label: '5時間未満' },
+      { value: 3, label: '5-20時間' },
+      { value: 5, label: '20時間以上' }
     ]
   },
   {
     field: 'qualityImprovement',
-    label: '品質向上効果',
-    description: '期待される品質向上効果',
+    label: 'ミス・やり直しの頻度',
+    description: 'この業務でのミスややり直しはどの程度発生しますか？',
     options: [
-      { value: 1, label: '変化なし' },
-      { value: 3, label: '中程度改善' },
-      { value: 5, label: '大幅改善' }
+      { value: 1, label: 'ほとんど発生しない' },
+      { value: 3, label: '月1-2回程度' },
+      { value: 5, label: '週1回以上発生' }
     ]
   }
 ];

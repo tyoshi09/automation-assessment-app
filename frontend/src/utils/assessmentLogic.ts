@@ -9,38 +9,65 @@ export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResul
     form.apiIntegration + form.securityConstraints + form.timeSavingEffect + 
     form.qualityImprovement;
 
-  // ノックアウトファクター判定
+  // 実務的なノックアウトファクター判定
   const knockoutFactors: string[] = [];
-  if (form.dataConfidentiality === 1) knockoutFactors.push('データ・情報の機密性');
-  if (form.realtimeRequirement === 1) knockoutFactors.push('リアルタイム性要求');
-  if (form.securityConstraints === 1) knockoutFactors.push('セキュリティ制約');
-  if (form.timeSavingEffect === 1) knockoutFactors.push('時間短縮効果');
+  if (form.dataConfidentiality === 1) knockoutFactors.push('機密データのため自動化困難');
+  if (form.realtimeRequirement === 1) knockoutFactors.push('リアルタイム対応が必要');
+  if (form.securityConstraints === 1) knockoutFactors.push('セキュリティ承認が困難');
+  if (form.timeSavingEffect === 1) knockoutFactors.push('投資対効果が低い（月5時間未満）');
 
-  // 技術レベル判定
+  // より実践的な技術レベル判定
   let techLevel: AssessmentResult['techLevel'];
+  
   if (knockoutFactors.length > 0) {
     techLevel = '導入困難';
-  } else if (form.regularity >= 4 && form.procedureClarity >= 4 && form.exceptionFrequency >= 4) {
-    techLevel = 'Lv1:RPA';
-  } else if (form.procedureDecision === 3 && form.learningAdaptation === 3) {
-    techLevel = 'Lv2:AI+ワークフロー';
-  } else if (form.procedureDecision <= 2 && form.learningAdaptation <= 2) {
-    techLevel = 'Lv3:エージェントAI';
   } else {
-    techLevel = '導入困難';
+    // RPA適用条件：高頻度 + 標準化済み + 単純作業
+    const rpaScore = form.regularity + form.procedureClarity + form.exceptionFrequency;
+    
+    // AI適用条件：判断業務 + 文書処理 + 複雑性
+    const aiScore = (6 - form.exceptionFrequency) + (6 - form.procedureDecision) + form.dataProcessing;
+    
+    // システム間連携の複雑さ
+    const systemComplexity = form.systemOperation + form.apiIntegration;
+    
+    if (rpaScore >= 12 && form.exceptionFrequency >= 4 && systemComplexity >= 6) {
+      techLevel = 'Lv1:RPA';
+    } else if (aiScore >= 8 && form.dataProcessing <= 3 && form.timeSavingEffect >= 3) {
+      techLevel = 'Lv3:エージェントAI';
+    } else if (totalScore >= 35) {
+      techLevel = 'Lv2:AI+ワークフロー';
+    } else {
+      techLevel = '導入困難';
+    }
   }
 
-  // 導入可能性判定
-  const feasibility: AssessmentResult['feasibility'] = 
-    totalScore >= 50 ? '高' : totalScore >= 35 ? '中' : '低';
+  // ROI重視の導入可能性判定
+  let feasibility: AssessmentResult['feasibility'];
+  const roiScore = form.timeSavingEffect + form.qualityImprovement + form.regularity;
+  const complexityPenalty = (6 - form.procedureClarity) + (6 - form.securityConstraints);
+  const adjustedScore = totalScore + roiScore - complexityPenalty;
+  
+  if (adjustedScore >= 45 && form.timeSavingEffect >= 3) {
+    feasibility = '高';
+  } else if (adjustedScore >= 30 && techLevel !== '導入困難') {
+    feasibility = '中';
+  } else {
+    feasibility = '低';
+  }
 
-  // 優先度判定
-  const priority: AssessmentResult['priority'] = 
-    feasibility === '高' ? '高' : 
-    (feasibility === '中' && techLevel !== '導入困難') ? '中' : '低';
+  // 実務的な優先度判定
+  let priority: AssessmentResult['priority'];
+  if (feasibility === '高' && form.timeSavingEffect >= 4) {
+    priority = '高';
+  } else if (feasibility === '中' && (form.qualityImprovement >= 4 || form.timeSavingEffect >= 3)) {
+    priority = '中';
+  } else {
+    priority = '低';
+  }
 
-  // 推奨ツール
-  const recommendedTool = getRecommendedTool(techLevel);
+  // より具体的な推奨ツール
+  const recommendedTool = getRecommendedTool(techLevel, form);
 
   return {
     id: Date.now().toString(),
@@ -58,16 +85,28 @@ export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResul
   };
 };
 
-const getRecommendedTool = (techLevel: AssessmentResult['techLevel']): string => {
+const getRecommendedTool = (techLevel: AssessmentResult['techLevel'], form: AssessmentForm): string => {
   switch (techLevel) {
     case 'Lv1:RPA':
-      return 'UiPath・Power Automate・WinActor';
+      if (form.systemOperation >= 4) {
+        return 'Power Automate Desktop（シンプル操作）・UiPath StudioX';
+      } else {
+        return 'UiPath Studio・Power Automate・BizRobo!';
+      }
     case 'Lv2:AI+ワークフロー':
-      return 'Dify・Zapier・Microsoft Copilot Studio';
+      if (form.dataProcessing <= 2) {
+        return 'Microsoft Copilot Studio・Zapier・Make（旧Integromat）';
+      } else {
+        return 'Power Platform・Dify・n8n';
+      }
     case 'Lv3:エージェントAI':
-      return 'Claude・ChatGPT・カスタムAIエージェント';
+      if (form.dataProcessing === 1) {
+        return 'Claude・ChatGPT Enterprise・Microsoft Copilot';
+      } else {
+        return 'GPT-4・Anthropic Claude・カスタムAIアプリ開発';
+      }
     case '導入困難':
-      return '手動作業継続を推奨';
+      return '現段階では手動継続。業務標準化後に再評価を推奨';
     default:
       return '要検討';
   }
