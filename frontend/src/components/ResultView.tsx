@@ -114,7 +114,7 @@ const ResultView: React.FC<Props> = ({ result, onNewAssessment }) => {
           </div>
         </div>
 
-        {result.outsourcingStatus >= 4 && (
+        {result.outsourcingStatus && result.outsourcingStatus >= 4 && (
           <div className="rationale-section outsourcing-note">
             <p>💡 この業務は外注で実施されているため、自動化によるコスト削減効果が特に期待できます。</p>
           </div>
