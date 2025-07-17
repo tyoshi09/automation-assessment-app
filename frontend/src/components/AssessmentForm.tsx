@@ -25,19 +25,21 @@ const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
     businessName: '',
     evaluationDate: getTodayDate(),
     evaluator: '',
-    regularity: 3,
-    procedureClarity: 3,
-    exceptionFrequency: 3,
-    procedureDecision: 3,
-    learningAdaptation: 3,
-    dataConfidentiality: 3,
-    realtimeRequirement: 3,
-    systemOperation: 3,
-    dataProcessing: 3,
-    apiIntegration: 3,
-    securityConstraints: 3,
-    timeSavingEffect: 3,
-    qualityImprovement: 3
+    // ビジネスインパクト軸
+    monthlyWorkTime: 3,
+    taskPersonality: 3,
+    errorFrequency: 3,
+    urgencyLevel: 3,
+    // 技術実現性軸
+    dataStructure: 3,
+    procedureDocumentation: 3,
+    exceptionHandling: 3,
+    taskComplexity: 3,
+    // 持続可能性軸
+    taskFrequency: 3,
+    departmentExpansion: 3,
+    businessContinuity: 3,
+    maintenanceEase: 3
   });
 
   const handleSubmit = async (e: React.FormEvent) => {

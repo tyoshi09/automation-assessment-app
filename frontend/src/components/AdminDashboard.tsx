@@ -329,21 +329,34 @@ const AdminDashboard: React.FC = () => {
             <h3>評価基準・判定ロジック</h3>
             
             <div className="criteria-section">
-              <h4>🎯 技術レベル判定</h4>
+              <h4>🎯 技術レベル判定（13項目×5点満点=65点）</h4>
+              <div className="scoring-overview">
+                <div className="scoring-summary">
+                  <p><strong>📊 スコア配点システム：</strong></p>
+                  <ul>
+                    <li>各項目1-5点 × 13項目 = 最大65点</li>
+                    <li>点数が高いほど自動化に適している</li>
+                    <li>技術レベルは複数条件の組み合わせで決定</li>
+                  </ul>
+                </div>
+              </div>
               <div className="criteria-grid">
                 <div className="criteria-item">
                   <div className="criteria-header">
                     <span className="tech-level-badge" style={{ backgroundColor: '#28a745' }}>Lv1:RPA</span>
                   </div>
                   <div className="criteria-content">
-                    <p><strong>適用条件：</strong></p>
+                    <p><strong>🎯 判定条件（AND条件）：</strong></p>
                     <ul>
-                      <li>高頻度（毎日・週5回以上）の作業</li>
-                      <li>手順が完全に標準化済み</li>
-                      <li>単純作業中心（判断不要）</li>
-                      <li>システム連携がシンプル</li>
+                      <li><strong>RPA適用スコア</strong>：作業頻度+手順標準化+判断業務 ≥ 12点</li>
+                      <li><strong>単純作業</strong>：判断業務の割合 ≥ 4点</li>
+                      <li><strong>システム連携</strong>：使用システム数+連携難易度 ≥ 6点</li>
                     </ul>
-                    <p><strong>推奨ツール：</strong><br/>Power Automate・UiPath・BizRobo!</p>
+                    <p><strong>💡 計算例：</strong><br/>
+                    毎日(5点) + マニュアル化済み(5点) + 単純作業(5点) = 15点 ✅<br/>
+                    判断業務の割合(4点) ✅ / システム連携(3+3=6点) ✅</p>
+                    <p><strong>適用例：</strong>毎日の定型作業、Excel・CSV処理</p>
+                    <p><strong>推奨ツール：</strong>Power Automate・UiPath・BizRobo!</p>
                   </div>
                 </div>
 
@@ -352,14 +365,17 @@ const AdminDashboard: React.FC = () => {
                     <span className="tech-level-badge" style={{ backgroundColor: '#fd7e14' }}>Lv2:AI+ワークフロー</span>
                   </div>
                   <div className="criteria-content">
-                    <p><strong>適用条件：</strong></p>
+                    <p><strong>🎯 判定条件（AND条件）：</strong></p>
                     <ul>
-                      <li>中程度の複雑性</li>
-                      <li>一部で人間の判断が必要</li>
-                      <li>複数システム間連携</li>
-                      <li>月5-20時間の作業</li>
+                      <li><strong>総合スコア</strong>：13項目の合計 ≥ 35点</li>
+                      <li><strong>作業量</strong>：月間作業時間 ≥ 3点（5時間以上）</li>
+                      <li><strong>除外条件</strong>：RPA・エージェントAI条件に該当しない</li>
                     </ul>
-                    <p><strong>推奨ツール：</strong><br/>Power Platform・Zapier・Make</p>
+                    <p><strong>💡 計算例：</strong><br/>
+                    総合スコア：39点（平均3点×13項目） ✅<br/>
+                    月間作業時間：3点（5-20時間） ✅</p>
+                    <p><strong>適用例：</strong>週数回の作業、一部判断必要、複数システム</p>
+                    <p><strong>推奨ツール：</strong>Power Platform・Zapier・Make</p>
                   </div>
                 </div>
 
@@ -368,14 +384,17 @@ const AdminDashboard: React.FC = () => {
                     <span className="tech-level-badge" style={{ backgroundColor: '#6f42c1' }}>Lv3:エージェントAI</span>
                   </div>
                   <div className="criteria-content">
-                    <p><strong>適用条件：</strong></p>
+                    <p><strong>🎯 判定条件（AND条件）：</strong></p>
                     <ul>
-                      <li>大部分が判断業務</li>
-                      <li>文章理解・要約が必要</li>
-                      <li>PDF・画像・非構造化データ</li>
-                      <li>月20時間以上の作業</li>
+                      <li><strong>AI適用スコア</strong>：(6-判断業務)+(6-データ入力)+文書処理 ≥ 8点</li>
+                      <li><strong>文書形式</strong>：PDF・画像等の扱い ≤ 3点</li>
+                      <li><strong>作業量</strong>：月間作業時間 ≥ 3点（5時間以上）</li>
                     </ul>
-                    <p><strong>推奨ツール：</strong><br/>Claude・ChatGPT・Microsoft Copilot</p>
+                    <p><strong>💡 計算例：</strong><br/>
+                    判断業務多い(2点→4点) + 文章理解必要(1点→5点) + PDF処理(1点) = 10点 ✅<br/>
+                    文書形式：1点（PDF・画像） ✅ / 作業時間：3点 ✅</p>
+                    <p><strong>適用例：</strong>文章理解・要約、PDF処理、判断業務中心</p>
+                    <p><strong>推奨ツール：</strong>Claude・ChatGPT・Microsoft Copilot</p>
                   </div>
                 </div>
 
@@ -384,14 +403,17 @@ const AdminDashboard: React.FC = () => {
                     <span className="tech-level-badge" style={{ backgroundColor: '#dc3545' }}>導入困難</span>
                   </div>
                   <div className="criteria-content">
-                    <p><strong>条件：</strong></p>
+                    <p><strong>🎯 判定条件（OR条件・いずれか該当）：</strong></p>
                     <ul>
-                      <li>機密データ・リアルタイム対応</li>
-                      <li>月5時間未満の作業</li>
-                      <li>厳格なセキュリティ承認が必要</li>
-                      <li>ROIが見込めない</li>
+                      <li><strong>機密性：</strong>機密データ = 1点</li>
+                      <li><strong>緊急性：</strong>リアルタイム対応 = 1点</li>
+                      <li><strong>承認：</strong>セキュリティ承認 = 1点</li>
+                      <li><strong>効果：</strong>月間作業時間 = 1点（5時間未満）</li>
                     </ul>
-                    <p><strong>推奨：</strong><br/>業務標準化後に再評価</p>
+                    <p><strong>💡 計算例：</strong><br/>
+                    機密データ(1点) → 自動的に導入困難 ❌<br/>
+                    月5時間未満(1点) → ROI低く導入困難 ❌</p>
+                    <p><strong>推奨：</strong>業務標準化・セキュリティ承認後に再評価</p>
                   </div>
                 </div>
               </div>

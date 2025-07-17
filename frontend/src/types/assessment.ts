@@ -6,20 +6,23 @@ export interface AssessmentForm {
   evaluationDate: string;
   evaluator: string;
 
-  // 評価項目（1-5点）
-  regularity: number;            // 定型・反復性
-  procedureClarity: number;      // ルール・手順の明確性
-  exceptionFrequency: number;    // 例外処理の頻度
-  procedureDecision: number;     // 作業手順の決定
-  learningAdaptation: number;    // 学習・適応の必要性
-  dataConfidentiality: number;   // データ・情報の機密性
-  realtimeRequirement: number;   // リアルタイム性要求
-  systemOperation: number;       // システム操作
-  dataProcessing: number;        // データ処理
-  apiIntegration: number;        // API連携
-  securityConstraints: number;   // セキュリティ制約
-  timeSavingEffect: number;      // 時間短縮効果
-  qualityImprovement: number;    // 品質向上効果
+  // ビジネスインパクト軸（1-5点）
+  monthlyWorkTime: number;       // 月間作業時間
+  taskPersonality: number;       // 作業の属人性
+  errorFrequency: number;        // 現在のミス率
+  urgencyLevel: number;          // 業務の緊急度
+
+  // 技術実現性軸（1-5点）
+  dataStructure: number;         // データの整理度
+  procedureDocumentation: number; // 作業手順書の完備度
+  exceptionHandling: number;     // 例外対応の頻度
+  taskComplexity: number;        // 作業の複雑度
+
+  // 持続可能性軸（1-5点）
+  taskFrequency: number;         // 作業実施頻度
+  departmentExpansion: number;   // 他部署展開の可能性
+  businessContinuity: number;    // 業務の将来性
+  maintenanceEase: number;       // 保守・メンテナンス性
 }
 
 export interface AssessmentResult {
@@ -29,7 +32,7 @@ export interface AssessmentResult {
   businessName: string;
   totalScore: number;
   knockoutFactors: string[];
-  techLevel: 'Lv1:RPA' | 'Lv2:AI+ワークフロー' | 'Lv3:エージェントAI' | '導入困難';
+  techLevel: 'ワークフロー型' | '検索+生成型' | 'AIエージェント型' | '導入困難';
   feasibility: '高' | '中' | '低';
   priority: '高' | '中' | '低';
   recommendedTool: string;
@@ -42,6 +45,7 @@ export interface EvaluationCriteria {
   field: keyof AssessmentForm;
   label: string;
   description: string;
+  category: 'business' | 'technical' | 'sustainability';
   options: {
     value: number;
     label: string;

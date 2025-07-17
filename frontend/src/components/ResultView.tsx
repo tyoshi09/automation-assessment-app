@@ -10,9 +10,9 @@ interface Props {
 const ResultView: React.FC<Props> = ({ result, onNewAssessment }) => {
   const getTechLevelColor = (level: AssessmentResult['techLevel']) => {
     switch (level) {
-      case 'Lv1:RPA': return '#27ae60';
-      case 'Lv2:AI+ワークフロー': return '#f39c12';
-      case 'Lv3:エージェントAI': return '#9b59b6';
+      case 'ワークフロー型': return '#27ae60';
+      case '検索+生成型': return '#f39c12';
+      case 'AIエージェント型': return '#9b59b6';
       case '導入困難': return '#e74c3c';
       default: return '#95a5a6';
     }
