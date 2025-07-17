@@ -12,6 +12,7 @@ const AdminDashboard: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showCriteriaModal, setShowCriteriaModal] = useState(false);
 
   useEffect(() => {
     loadAllAssessments();
@@ -210,6 +211,12 @@ const AdminDashboard: React.FC = () => {
 
         <div className="action-section">
           <button
+            onClick={() => setShowCriteriaModal(true)}
+            className="criteria-btn"
+          >
+            📊 評価基準
+          </button>
+          <button
             onClick={() => setShowDeleteConfirm(true)}
             disabled={selectedItems.size === 0}
             className="delete-btn"
@@ -310,6 +317,113 @@ const AdminDashboard: React.FC = () => {
                 className="confirm-delete-btn"
               >
                 削除する
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCriteriaModal && (
+        <div className="modal-overlay">
+          <div className="modal criteria-modal">
+            <h3>評価基準・判定ロジック</h3>
+            
+            <div className="criteria-section">
+              <h4>🎯 技術レベル判定</h4>
+              <div className="criteria-grid">
+                <div className="criteria-item">
+                  <div className="criteria-header">
+                    <span className="tech-level-badge" style={{ backgroundColor: '#28a745' }}>Lv1:RPA</span>
+                  </div>
+                  <div className="criteria-content">
+                    <p><strong>条件：</strong></p>
+                    <ul>
+                      <li>定型・反復性 ≥ 4点</li>
+                      <li>ルール明確性 ≥ 4点</li>
+                      <li>例外処理 ≥ 4点</li>
+                    </ul>
+                    <p><strong>推奨ツール：</strong><br/>UiPath・Power Automate・WinActor</p>
+                  </div>
+                </div>
+
+                <div className="criteria-item">
+                  <div className="criteria-header">
+                    <span className="tech-level-badge" style={{ backgroundColor: '#fd7e14' }}>Lv2:AI+ワークフロー</span>
+                  </div>
+                  <div className="criteria-content">
+                    <p><strong>条件：</strong></p>
+                    <ul>
+                      <li>作業手順の決定 = 3点</li>
+                      <li>学習・適応 = 3点</li>
+                    </ul>
+                    <p><strong>推奨ツール：</strong><br/>Dify・Zapier・Microsoft Copilot Studio</p>
+                  </div>
+                </div>
+
+                <div className="criteria-item">
+                  <div className="criteria-header">
+                    <span className="tech-level-badge" style={{ backgroundColor: '#6f42c1' }}>Lv3:エージェントAI</span>
+                  </div>
+                  <div className="criteria-content">
+                    <p><strong>条件：</strong></p>
+                    <ul>
+                      <li>作業手順の決定 ≤ 2点</li>
+                      <li>学習・適応 ≤ 2点</li>
+                    </ul>
+                    <p><strong>推奨ツール：</strong><br/>Claude・ChatGPT・カスタムAIエージェント</p>
+                  </div>
+                </div>
+
+                <div className="criteria-item">
+                  <div className="criteria-header">
+                    <span className="tech-level-badge" style={{ backgroundColor: '#dc3545' }}>導入困難</span>
+                  </div>
+                  <div className="criteria-content">
+                    <p><strong>条件：</strong></p>
+                    <ul>
+                      <li>ノックアウトファクター存在</li>
+                      <li>または上記条件に該当なし</li>
+                    </ul>
+                    <p><strong>推奨：</strong><br/>手動作業継続</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="criteria-section">
+              <h4>⚠️ ノックアウトファクター</h4>
+              <div className="knockout-list">
+                <div className="knockout-item">データ・情報の機密性 = 1点</div>
+                <div className="knockout-item">リアルタイム性要求 = 1点</div>
+                <div className="knockout-item">セキュリティ制約 = 1点</div>
+                <div className="knockout-item">時間短縮効果 = 1点</div>
+              </div>
+            </div>
+
+            <div className="criteria-section">
+              <h4>📈 導入可能性判定</h4>
+              <div className="feasibility-grid">
+                <div className="feasibility-item">
+                  <span className="feasibility-badge" style={{ backgroundColor: '#28a745' }}>高</span>
+                  <span>50-65点（積極的導入推奨）</span>
+                </div>
+                <div className="feasibility-item">
+                  <span className="feasibility-badge" style={{ backgroundColor: '#ffc107' }}>中</span>
+                  <span>35-49点（条件整備後に導入検討）</span>
+                </div>
+                <div className="feasibility-item">
+                  <span className="feasibility-badge" style={{ backgroundColor: '#dc3545' }}>低</span>
+                  <span>34点以下（現状では導入困難）</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="modal-actions">
+              <button
+                onClick={() => setShowCriteriaModal(false)}
+                className="close-btn"
+              >
+                閉じる
               </button>
             </div>
           </div>

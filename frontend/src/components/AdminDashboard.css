@@ -168,6 +168,21 @@
   background: #218838;
 }
 
+.criteria-btn {
+  background: #17a2b8;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.criteria-btn:hover {
+  background: #138496;
+}
+
 .assessment-table-container {
   background: white;
   border-radius: 8px;
@@ -296,6 +311,135 @@
 
 .confirm-delete-btn:hover {
   background: #c82333;
+}
+
+.close-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.close-btn:hover {
+  background: #0056b3;
+}
+
+/* 評価基準モーダルのスタイル */
+.criteria-modal {
+  max-width: 900px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.criteria-section {
+  margin-bottom: 30px;
+}
+
+.criteria-section h4 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 8px;
+}
+
+.criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.criteria-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.criteria-header {
+  margin-bottom: 10px;
+}
+
+.criteria-content {
+  font-size: 14px;
+}
+
+.criteria-content ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.criteria-content li {
+  margin-bottom: 4px;
+}
+
+.knockout-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+}
+
+.knockout-item {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: 500;
+  color: #856404;
+}
+
+.feasibility-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feasibility-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.feasibility-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .criteria-modal {
+    width: 98%;
+    padding: 15px;
+  }
+  
+  .criteria-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .knockout-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .feasibility-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
 
 /* レスポンシブ対応 */
