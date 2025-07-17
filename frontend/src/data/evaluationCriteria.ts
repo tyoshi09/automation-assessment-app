@@ -58,6 +58,20 @@ export const evaluationCriteria: EvaluationCriteria[] = [
       { value: 5, label: 'リアルタイム処理が必要' }
     ]
   },
+  {
+    field: 'outsourcingStatus',
+    label: 'B5. 現在の実施体制',
+    description: 'この業務を実施している体制',
+    detailDescription: '外注業務は自動化による直接的なコスト削減効果が高く、優先度が上がります。内製業務は品質向上や業務効率化の観点で評価します。',
+    category: 'business',
+    options: [
+      { value: 1, label: '完全内製（自社社員のみ）' },
+      { value: 2, label: '主に内製（一部外注）' },
+      { value: 3, label: '内製と外注が半々' },
+      { value: 4, label: '主に外注（一部内製）' },
+      { value: 5, label: '完全外注' }
+    ]
+  },
 
   // === 技術実現性軸 ===
   {

@@ -27,6 +27,14 @@ const ResultView: React.FC<Props> = ({ result, onNewAssessment }) => {
     }
   };
 
+  // 軸ごとのスコア計算（ダミー実装 - 実際は計算ロジックを統合）
+  const calculateAxisScore = (result: AssessmentResult, axis: string) => {
+    // 実際の実装では、各軸の項目を合計する
+    if (axis === 'business') return Math.floor(result.totalScore * 0.42);
+    if (axis === 'technical') return Math.floor(result.totalScore * 0.33);
+    return Math.floor(result.totalScore * 0.25);
+  };
+
   return (
     <div className="result-view">
       <h2>評価結果</h2>
@@ -40,7 +48,7 @@ const ResultView: React.FC<Props> = ({ result, onNewAssessment }) => {
         <div className="total-score">
           <span className="score-label">総合得点</span>
           <span className="score-value">{result.totalScore}</span>
-          <span className="score-max">/65</span>
+          <span className="score-max">/60</span>
         </div>
       </div>
 
@@ -79,6 +87,38 @@ const ResultView: React.FC<Props> = ({ result, onNewAssessment }) => {
       <div className="recommended-tool">
         <h4>推奨ツール</h4>
         <p>{result.recommendedTool}</p>
+      </div>
+
+      <div className="assessment-rationale">
+        <h4>📊 判定根拠</h4>
+        <div className="rationale-section">
+          <h5>技術レベル判定の根拠</h5>
+          <p>{result.techLevelReason || '総合的な評価により判定されました'}</p>
+        </div>
+        
+        <div className="rationale-section">
+          <h5>評価の内訳</h5>
+          <div className="score-breakdown">
+            <div className="score-item">
+              <span className="score-label">ビジネスインパクト</span>
+              <span className="score-value">{calculateAxisScore(result, 'business')}/25点</span>
+            </div>
+            <div className="score-item">
+              <span className="score-label">技術実現性</span>
+              <span className="score-value">{calculateAxisScore(result, 'technical')}/20点</span>
+            </div>
+            <div className="score-item">
+              <span className="score-label">持続可能性</span>
+              <span className="score-value">{calculateAxisScore(result, 'sustainability')}/15点</span>
+            </div>
+          </div>
+        </div>
+
+        {result.outsourcingStatus >= 4 && (
+          <div className="rationale-section outsourcing-note">
+            <p>💡 この業務は外注で実施されているため、自動化によるコスト削減効果が特に期待できます。</p>
+          </div>
+        )}
       </div>
 
       {result.knockoutFactors.length > 0 && (

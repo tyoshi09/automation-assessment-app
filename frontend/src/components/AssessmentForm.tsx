@@ -34,6 +34,7 @@ const AssessmentForm: React.FC<Props> = ({ onSubmit }) => {
     taskPersonality: 3,
     errorFrequency: 3,
     urgencyLevel: 3,
+    outsourcingStatus: 3,
     // 技術実現性軸
     dataStructure: 3,
     procedureDocumentation: 3,

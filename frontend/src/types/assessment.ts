@@ -11,6 +11,7 @@ export interface AssessmentForm {
   taskPersonality: number;       // 作業の属人性
   errorFrequency: number;        // 現在のミス率
   urgencyLevel: number;          // 業務の緊急度
+  outsourcingStatus: number;     // 現在の実施体制（内製/外注）
 
   // 技術実現性軸（1-5点）
   dataStructure: number;         // データの整理度
@@ -32,12 +33,14 @@ export interface AssessmentResult {
   totalScore: number;
   knockoutFactors: string[];
   techLevel: 'ワークフロー型' | '検索+生成型' | 'AIエージェント型' | '導入困難';
+  techLevelReason?: string;
   feasibility: '高' | '中' | '低';
   priority: '高' | '中' | '低';
   recommendedTool: string;
   evaluationDate: string;
   evaluator: string;
   createdAt?: string;
+  outsourcingStatus?: number;
 }
 
 export interface EvaluationCriteria {
