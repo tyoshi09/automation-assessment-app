@@ -9,7 +9,7 @@ interface AssessmentResult {
   businessName: string;
   totalScore: number;
   knockoutFactors: string[];
-  techLevel: 'Lv1:RPA' | 'Lv2:AI+ワークフロー' | 'Lv3:エージェントAI' | '導入困難';
+  techLevel: 'Lv.0:自動不可' | 'Lv.1:ワークフロー型' | 'Lv.2:検索＋生成型&AIエージェント型';
   feasibility: '高' | '中' | '低';
   priority: '高' | '中' | '低';
   recommendedTool: string;

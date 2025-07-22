@@ -19,7 +19,7 @@ export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResul
   let techLevelReason: string = '';
   
   if (knockoutFactors.length > 0) {
-    techLevel = '導入困難';
+    techLevel = 'Lv.0:自動不可';
     techLevelReason = 'ノックアウト要因により自動化は推奨されません';
   } else {
     // ワークフロー型判定：構造化データ + 手順明確 + 例外少ない
@@ -33,16 +33,13 @@ export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResul
     const hybridSuitable = totalScore >= 30 && !isWorkflowSuitable && !isAgentSuitable;
     
     if (isWorkflowSuitable) {
-      techLevel = 'ワークフロー型';
-      techLevelReason = '定型的な手順で処理可能な業務のため、ルールベースの自動化が適しています';
-    } else if (isAgentSuitable) {
-      techLevel = 'AIエージェント型';
-      techLevelReason = '複雑な判断や非定型な処理が必要なため、AI技術の活用が適しています';
-    } else if (hybridSuitable) {
-      techLevel = '検索+生成型';
-      techLevelReason = '情報検索と処理の組み合わせが必要な業務のため、RAG技術が適しています';
+      techLevel = 'Lv.1:ワークフロー型';
+      techLevelReason = '定型的な手順で処理可能な業務のため、ルールベースの自動化（RPA、n8n等）が適しています';
+    } else if (isAgentSuitable || hybridSuitable) {
+      techLevel = 'Lv.2:検索＋生成型&AIエージェント型';
+      techLevelReason = '情報検索・生成や複雑な判断が必要なため、RAG技術やAIエージェント（Dify、Genspark等）の活用が適しています';
     } else {
-      techLevel = '導入困難';
+      techLevel = 'Lv.0:自動不可';
       techLevelReason = '現在の業務特性では自動化による効果が限定的です';
     }
   }
@@ -55,7 +52,7 @@ export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResul
   
   if (adjustedScore >= 12 && form.monthlyWorkTime >= 3) {
     feasibility = '高';
-  } else if (adjustedScore >= 8 && techLevel !== '導入困難') {
+  } else if (adjustedScore >= 8 && techLevel !== 'Lv.0:自動不可') {
     feasibility = '中';
   } else {
     feasibility = '低';
@@ -96,25 +93,19 @@ export const calculateAssessmentResult = (form: AssessmentForm): AssessmentResul
 
 const getRecommendedTool = (techLevel: AssessmentResult['techLevel'], form: AssessmentForm): string => {
   switch (techLevel) {
-    case 'ワークフロー型':
+    case 'Lv.1:ワークフロー型':
       if (form.dataStructure >= 4) {
-        return 'RPA製品（画面操作型・API連携型）またはiPaaS製品での実装が可能です';
+        return 'RPA製品（UiPath、Power Automate等）、ワークフローツール（n8n、Zapier等）での実装が可能です';
       } else {
-        return 'デスクトップ型RPA製品から段階的に導入することを推奨します';
+        return 'デスクトップ型RPA製品やn8nのようなビジュアルワークフローツールから段階的に導入することを推奨します';
       }
-    case '検索+生成型':
-      if (form.dataStructure <= 2) {
-        return '生成AI（LLM）を活用した文書処理・情報抽出システムの構築を推奨します';
+    case 'Lv.2:検索＋生成型&AIエージェント型':
+      if (form.dataStructure <= 2 || form.taskComplexity <= 2) {
+        return 'AIエージェントプラットフォーム（Dify、LangChain、AutoGPT等）での実装を推奨します';
       } else {
-        return 'RAG（検索拡張生成）技術を用いた知識活用システムの構築が効果的です';
+        return 'RAG技術を活用した検索拡張生成システム（Genspark、Perplexity型システム）の構築が効果的です';
       }
-    case 'AIエージェント型':
-      if (form.taskComplexity === 1) {
-        return '高度なAIエージェントプラットフォームでの実装を推奨します';
-      } else {
-        return 'ローコード・ノーコードAI開発基盤での段階的な実装が現実的です';
-      }
-    case '導入困難':
+    case 'Lv.0:自動不可':
       return '現段階では自動化よりも、業務プロセスの見直しと標準化を優先することを推奨します';
     default:
       return '個別に詳細な分析が必要です';

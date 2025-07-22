@@ -108,10 +108,9 @@ const IndustryDashboard: React.FC = () => {
 
   const getTechLevelColor = (level: string) => {
     switch (level) {
-      case 'Lv1:RPA': return '#28a745';
-      case 'Lv2:AI+ワークフロー': return '#fd7e14';
-      case 'Lv3:エージェントAI': return '#6f42c1';
-      case '導入困難': return '#dc3545';
+      case 'Lv.1:ワークフロー型': return '#28a745';
+      case 'Lv.2:検索＋生成型&AIエージェント型': return '#fd7e14';
+      case 'Lv.0:自動不可': return '#dc3545';
       default: return '#6c757d';
     }
   };

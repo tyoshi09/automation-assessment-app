@@ -102,10 +102,9 @@ const AdminDashboard: React.FC = () => {
 
   const getTechLevelColor = (level: string) => {
     switch (level) {
-      case 'Lv1:RPA': return '#28a745';
-      case 'Lv2:AI+ワークフロー': return '#fd7e14';
-      case 'Lv3:エージェントAI': return '#6f42c1';
-      case '導入困難': return '#dc3545';
+      case 'Lv.1:ワークフロー型': return '#28a745';
+      case 'Lv.2:検索＋生成型&AIエージェント型': return '#fd7e14';
+      case 'Lv.0:自動不可': return '#dc3545';
       default: return '#6c757d';
     }
   };
@@ -343,7 +342,7 @@ const AdminDashboard: React.FC = () => {
               <div className="criteria-grid">
                 <div className="criteria-item">
                   <div className="criteria-header">
-                    <span className="tech-level-badge" style={{ backgroundColor: '#28a745' }}>Lv1:RPA</span>
+                    <span className="tech-level-badge" style={{ backgroundColor: '#28a745' }}>Lv.1:ワークフロー型</span>
                   </div>
                   <div className="criteria-content">
                     <p><strong>🎯 判定条件（AND条件）：</strong></p>
@@ -362,7 +361,7 @@ const AdminDashboard: React.FC = () => {
 
                 <div className="criteria-item">
                   <div className="criteria-header">
-                    <span className="tech-level-badge" style={{ backgroundColor: '#fd7e14' }}>Lv2:AI+ワークフロー</span>
+                    <span className="tech-level-badge" style={{ backgroundColor: '#fd7e14' }}>Lv.2:検索＋生成型&AIエージェント型</span>
                   </div>
                   <div className="criteria-content">
                     <p><strong>🎯 判定条件（AND条件）：</strong></p>
@@ -381,7 +380,7 @@ const AdminDashboard: React.FC = () => {
 
                 <div className="criteria-item">
                   <div className="criteria-header">
-                    <span className="tech-level-badge" style={{ backgroundColor: '#6f42c1' }}>Lv3:エージェントAI</span>
+                    <span className="tech-level-badge" style={{ backgroundColor: '#6f42c1' }}>Lv.2:検索＋生成型&AIエージェント型</span>
                   </div>
                   <div className="criteria-content">
                     <p><strong>🎯 判定条件（AND条件）：</strong></p>
@@ -400,7 +399,7 @@ const AdminDashboard: React.FC = () => {
 
                 <div className="criteria-item">
                   <div className="criteria-header">
-                    <span className="tech-level-badge" style={{ backgroundColor: '#dc3545' }}>導入困難</span>
+                    <span className="tech-level-badge" style={{ backgroundColor: '#dc3545' }}>Lv.0:自動不可</span>
                   </div>
                   <div className="criteria-content">
                     <p><strong>🎯 判定条件（OR条件・いずれか該当）：</strong></p>

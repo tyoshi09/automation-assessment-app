@@ -78,7 +78,7 @@ export const evaluationCriteria: EvaluationCriteria[] = [
     field: 'dataStructure',
     label: 'T1. データの整理度',
     description: '扱うデータの整理・構造化状況',
-    detailDescription: 'データが構造化されているほど、ワークフロー型の自動化が適用しやすくなります。非構造化データはAI型の処理が必要です。',
+    detailDescription: 'データが構造化されているほど、Lv.1(ワークフロー型：RPA、n8n等)が適用しやすくなります。非構造化データはLv.2(検索＋生成型&AIエージェント型：Dify、Genspark等)が必要です。',
     category: 'technical',
     options: [
       { value: 1, label: '手書き文書・PDF・画像' },
@@ -106,7 +106,7 @@ export const evaluationCriteria: EvaluationCriteria[] = [
     field: 'exceptionHandling',
     label: 'T3. 例外対応の頻度',
     description: 'イレギュラーな対応が必要な頻度',
-    detailDescription: '例外処理が頻繁に発生する業務は、ワークフロー型では対応困難です。AIエージェント型が適している場合があります。',
+    detailDescription: '例外処理が頻繁に発生する業務は、Lv.1(ワークフロー型)では対応困難です。Lv.2(検索＋生成型&AIエージェント型)が適している場合があります。',
     category: 'technical',
     options: [
       { value: 1, label: '毎回異なる対応' },
@@ -120,7 +120,7 @@ export const evaluationCriteria: EvaluationCriteria[] = [
     field: 'taskComplexity',
     label: 'T4. 作業の複雑度',
     description: '業務実行に必要な専門知識・スキルレベル',
-    detailDescription: '単純作業はワークフロー型、高度な専門知識が必要な作業はAIエージェント型が適しています。',
+    detailDescription: '単純作業はLv.1(ワークフロー型：RPA、n8n等)、高度な専門知識や複雑な判断が必要な作業はLv.2(検索＋生成型&AIエージェント型：Dify、Genspark等)が適しています。',
     category: 'technical',
     options: [
       { value: 1, label: '高度な専門知識が必要' },

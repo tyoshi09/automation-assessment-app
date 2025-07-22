@@ -33,10 +33,9 @@ const StatisticsCharts: React.FC<StatisticsChartsProps> = ({
   totalAssessments,
 }) => {
   const techLevelColors = {
-    'Lv1:RPA': '#28a745',
-    'Lv2:AI+ワークフロー': '#fd7e14',
-    'Lv3:エージェントAI': '#6f42c1',
-    '導入困難': '#dc3545',
+    'Lv.1:ワークフロー型': '#28a745',
+    'Lv.2:検索＋生成型&AIエージェント型': '#fd7e14',
+    'Lv.0:自動不可': '#dc3545',
   };
 
   const feasibilityColors = {
